@@ -11,9 +11,12 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "pg": "6.x",
+    "atob": "^2.0.3",
+    "btoa": "^1.1.2",
     "ejs": "^2.5.6",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "pg": "6.x",
+    "pg-promise": "^8.1.1"
   },
   "devDependencies": {
     "request": "^2.81.0",
