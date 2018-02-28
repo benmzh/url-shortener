@@ -1,23 +1,22 @@
 const express = require('express')
+var app = express()
 const path = require('path')
 const PORT = process.env.PORT || 5000
-var pg = require('pg');
+var pg = require('pg')
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-express().get('/db', function (request, response) {
+app.use(express.static(path.join(__dirname, 'public')))
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+app.get('/', (req, res) => res.render('pages/index'))
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+app.get('/db', function (req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM test_table', function(err, result) {
       done();
       if (err)
-       { console.error(err); response.send("Error " + err); }
+       { console.error(err); res.send("Error " + err); }
       else
-       { response.render('pages/db', {results: result.rows} ); }
+       { res.render('pages/db', {results: result.rows} ); }
     });
   });
 });
