@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
+var pg = require('pg');
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
@@ -9,9 +10,7 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-var pg = require('pg');
-
-app.get('/db', function (request, response) {
+express().get('/db', function (request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM test_table', function(err, result) {
       done();
